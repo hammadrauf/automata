@@ -12,5 +12,5 @@ add_definitions(${LIBCONFIG_CFLAGS_OTHER})
 
 add_executable(automata main.c)
 
-# Link the target to the GTK+ libraries
+# Link the target to the config libraries
 target_link_libraries(automata ${LIBCONFIG_LIBRARIES})
