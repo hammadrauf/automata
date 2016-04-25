@@ -4,18 +4,20 @@
 #include <stdbool.h>
 #include <libconfig.h>
 
-bool willAccept(config_setting_t *transition, const char *input) {
+unsigned int willAccept(config_setting_t *transition, const char *input) {
     config_setting_t *accepts = config_setting_lookup(transition, "accepts");
     int length = config_setting_length(accepts);
     int i;
     for(i = 0; i < length; ++i) {
         const char *cur = config_setting_get_string_elem(accepts, i);
-        if(strcmp(cur, "~") == 0 || strcmp(cur, &input[0]) == 0) {
-            return true;
+        if(*cur == input[0]) {
+            return 1;
+        } else if(*cur == '~') {
+            return 2;
         }
     }
 
-    return false;
+    return 0;
 }
 
 bool isValid(config_t *cfg, const char *start, const char *input) {
@@ -39,8 +41,9 @@ bool isValid(config_t *cfg, const char *start, const char *input) {
     int i;
     for(i = 0; i < num_paths; ++i) {
         config_setting_t *cur_path = config_setting_get_elem(trans, i);
-        if(willAccept(cur_path, input)) {
-            const char *next_input = input + 1;
+        unsigned int wa = willAccept(cur_path, input);
+        if(wa) {
+            const char *next_input = (wa == 1) ? input + 1 : input;
             const char *next_start;
             config_setting_lookup_string(cur_path, "to", &next_start);
             bool next = isValid(cfg, next_start, next_input);
