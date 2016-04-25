@@ -30,7 +30,7 @@ bool isValid(config_t *cfg, const char *start, const char *input) {
 
     int end_node = false;
     config_setting_lookup_bool(cur_node, "accepted", &end_node);
-    if(end_node) return true;
+    if(end_node && input[0] == '\0') return true;
 
     config_setting_t *trans = config_setting_lookup(cur_node, "transitions");
     if(trans == NULL) return false;
@@ -39,7 +39,6 @@ bool isValid(config_t *cfg, const char *start, const char *input) {
     int i;
     for(i = 0; i < num_paths; ++i) {
         config_setting_t *cur_path = config_setting_get_elem(trans, i);
-        // printf("%d\n", willAccept(cur_path, input));
         if(willAccept(cur_path, input)) {
             const char *next_input = input + 1;
             const char *next_start;
@@ -50,6 +49,11 @@ bool isValid(config_t *cfg, const char *start, const char *input) {
     }
 
     return false;
+}
+
+int to_dot(config_t *cfg, const char *start) {
+
+    return 0;
 }
 
 int main(int argc, char **argv) {
@@ -63,7 +67,6 @@ int main(int argc, char **argv) {
         return(EXIT_FAILURE);
     }
 
-    // const char input[] = {"q"};
     char *input = (char*)malloc(80*sizeof(char));
     scanf("%80s", input);
 
@@ -72,6 +75,8 @@ int main(int argc, char **argv) {
 
     bool accepted = isValid(&cfg, start_node, input);
     printf("%s\n", accepted ? "accepted" : "not accepted");
+
+    free(input);
 
 
     return 0;
