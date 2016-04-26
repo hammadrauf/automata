@@ -61,6 +61,12 @@ int to_dot(config_t *cfg, const char *start, char *dest) {
     int node_count = config_setting_length(nodes);
     int i;
 
+    strcat(dest, "\tstart [shape=plaintext];\n\tstart -> ");
+    const char *start_node;
+    config_lookup_string(cfg, "automaton.start", &start_node);
+    strcat(dest, start_node);
+    strcat(dest, "\n");
+
     for(i = 0; i < node_count; ++i) {
         config_setting_t *cur_node = config_setting_get_elem(nodes, i);
         if(cur_node == NULL) {
@@ -77,10 +83,20 @@ int to_dot(config_t *cfg, const char *start, char *dest) {
             config_setting_t *cur_path = config_setting_get_elem(trans, j);
             const char *next_start;
             config_setting_lookup_string(cur_path, "to", &next_start);
+            strcat(dest, "\t");
+
+            int accepted_state;
+            config_setting_lookup_bool(cur_node, "accepted", &accepted_state);
+            if(accepted_state) {
+                strcat(dest, config_setting_name(cur_node));
+                strcat(dest, " [shape=doublecircle];\n\t");
+            }
+
             strcat(dest, config_setting_name(cur_node));
             strcat(dest, " -> ");
             strcat(dest, next_start);
-            strcat(dest, "[label=\"");
+
+            strcat(dest, " [label=\"");
 
             config_setting_t *accepted = config_setting_lookup(cur_path, "accepts");
             int num_accepted = config_setting_length(accepted);
