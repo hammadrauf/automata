@@ -1,0 +1,7 @@
+digraph automaton {
+	start [shape=plaintext];
+	start -> q_0
+	q_0 -> q_1 [label="a,b"];
+	q_1 [shape=doublecircle];
+	q_1 -> q_0 [label="~"];
+}
