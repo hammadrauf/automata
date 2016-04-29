@@ -1,0 +1,43 @@
+version = "1.0.0"
+
+automaton: {
+    nodes = {
+        q_0 = {
+            accepted = false;
+            transitions = ({
+                to = "q_1";
+                accepts = ["a"];
+            },
+            {
+                to = "q_3";
+                accepts = ["b"]
+            });
+        },
+        q_1 = {
+            accepted = false;
+            transitions = ({
+                to = "q_2";
+                accepts = ["a"];
+            },
+            {
+                to = "q_1";
+                accepts = ["b"];
+            });
+        },
+        q_2 = {
+            accepted = true;
+            transitions = ({
+                to = "q_3";
+                accepts = ["a", "b"];
+            });
+        },
+        q_3 = {
+            accepted = false;
+            transitions = ({
+                to = "q_3";
+                accepts = ["a", "b"];
+            });
+        }
+    };
+    start = "q_0";
+}

@@ -16,6 +16,24 @@ $ automata file.aut --run # Read input from STDIN and determine if it is accepte
 $ automata file.aut --graph > out.gv # Output the automaton to a DOT graph
 ```
 
+## Sample Output
+
+### [Example 1](./examples/example1.aut)
+
+![Example 1 Graph](./examples/example1.png)
+
+### [Example 2](./examples/example2.aut)
+
+![Example 2 Graph](./examples/example2.png)
+
+### [Example 3](./examples/example3.aut)
+
+![Example 3 Graph](./examples/example3.png)
+
+### [Example 4](./examples/example4.aut)
+
+![Example 4 Graph](./examples/example4.png)
+
 ## Contributing
 
 1. Smash:facepunch::facepunch::facepunch: that mf fork:fork_and_knife: button:weary::100::100:
