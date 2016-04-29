@@ -61,7 +61,7 @@ int to_dot(config_t *cfg, const char *start, char *dest) {
     int node_count = config_setting_length(nodes);
     int i;
 
-    strcat(dest, "\tstart [shape=plaintext];\n\tstart -> ");
+    strcat(dest, "\tgraph [rankdir=LR];\n\tstart [shape=plaintext];\n\tstart -> ");
     const char *start_node;
     config_lookup_string(cfg, "automaton.start", &start_node);
     strcat(dest, start_node);

@@ -1,4 +1,5 @@
 digraph automaton {
+	graph [rankdir=LR];
 	start [shape=plaintext];
 	start -> q_0
 	q_0 -> q_1 [label="a"];
