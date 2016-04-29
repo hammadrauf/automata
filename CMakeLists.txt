@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project("automata")
-set(automata_VERSION "1.0.0")
+set(automata_VERSION "1.0.1")
 set(automata_VERSION_MAJOR "1")
 set(automata_VERSION_MINOR "0")
-set(automata_VERSION_PATCH "0")
+set(automata_VERSION_PATCH "1")
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBCONFIG REQUIRED libconfig)

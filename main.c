@@ -145,7 +145,7 @@ int main(int argc, char **argv) {
 
     if(strcmp(argv[2], "--run") == 0) {
         char input[80];
-        scanf("%79s", input);
+        scanf("%79[^\n]%*c", input);
 
         bool accepted = isValid(&cfg, start_node, input);
         printf("%s\n", accepted ? "accepted" : "not accepted");
