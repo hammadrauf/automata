@@ -55,17 +55,23 @@ bool isValid(config_t *cfg, const char *start, const char *input) {
 }
 
 int to_dot(config_t *cfg, const char *start, char *dest) {
-    strcat(dest, "digraph automaton {\n");
+    const char *fmt_str = "digraph automaton {\n"
+                           "\tgraph [rankdir=LR];\n\tstart [shape=plaintext];\n"
+                           "\tstart -> %s;\n"; // start_node
+    // strcat(dest, "digraph automaton {\n");
 
     config_setting_t *nodes = config_lookup(cfg, "automaton.nodes");
     int node_count = config_setting_length(nodes);
     int i;
 
-    strcat(dest, "\tgraph [rankdir=LR];\n\tstart [shape=plaintext];\n\tstart -> ");
+    // strcat(dest, "\tgraph [rankdir=LR];\n\tstart [shape=plaintext];\n\tstart -> ");
     const char *start_node;
     config_lookup_string(cfg, "automaton.start", &start_node);
-    strcat(dest, start_node);
-    strcat(dest, "\n");
+    // strcat(dest, start_node);
+    // strcat(dest, "\n");
+
+    char test_fmt[1024];
+    snprintf(test_fmt, 1024, fmt_str, start_node);
 
     for(i = 0; i < node_count; ++i) {
         config_setting_t *cur_node = config_setting_get_elem(nodes, i);
@@ -79,43 +85,42 @@ int to_dot(config_t *cfg, const char *start, char *dest) {
 
         int num_paths = config_setting_length(trans);
         int j;
+        char loop_fmt_str[256] = "\t%s%s%s -> %s [label=\"%s\"];\n";
         for(j = 0; j < num_paths; ++j) {
             config_setting_t *cur_path = config_setting_get_elem(trans, j);
             const char *next_start;
             config_setting_lookup_string(cur_path, "to", &next_start);
-            strcat(dest, "\t");
 
             int accepted_state;
             config_setting_lookup_bool(cur_node, "accepted", &accepted_state);
+            char cur_node_txt[32] = {0}, cur_node_shape[32] = {0};
+            strcpy(cur_node_txt, config_setting_name(cur_node));
             if(accepted_state) {
-                strcat(dest, config_setting_name(cur_node));
-                strcat(dest, " [shape=doublecircle];\n\t");
+                strcpy(cur_node_shape, " [shape=doublecircle];\n\t");
             }
-
-            strcat(dest, config_setting_name(cur_node));
-            strcat(dest, " -> ");
-            strcat(dest, next_start);
-
-            strcat(dest, " [label=\"");
 
             config_setting_t *accepted = config_setting_lookup(cur_path, "accepts");
             int num_accepted = config_setting_length(accepted);
+            char *label = (char *)calloc(2 * num_accepted, sizeof(char));
             int k;
             for(k = 0; k < num_accepted; ++k) {
                 if(k > 0) {
-                    strcat(dest, ",");
+                    strcat(label, ",");
                 }
 
                 config_setting_t *cur_acc = config_setting_get_elem(accepted, k);
-                strcat(dest, config_setting_get_string(cur_acc));
+                strcat(label, config_setting_get_string(cur_acc));
             }
-            strcat(dest, "\"];\n");
+            char loop_fmt[256];
+            snprintf(loop_fmt, 256, loop_fmt_str, accepted_state ? cur_node_txt : "", cur_node_shape, cur_node_txt, next_start, label);
+            strcat(test_fmt, loop_fmt);
+            free(label);
         }
     }
 
-    strcat(dest, "}\n");
+    strcat(test_fmt, "}\n");
 
-    printf("%s", dest);
+    strcpy(dest, test_fmt);
 
     return 0;
 }
@@ -152,6 +157,7 @@ int main(int argc, char **argv) {
     } else if(strcmp(argv[2], "--graph") == 0) {
         char *dest = (char *)calloc(1024, sizeof(char));
         to_dot(&cfg, start_node, dest);
+        printf("%s", dest);
         free(dest);
     }
 
