@@ -125,7 +125,7 @@ void help_message(char *name) {
 }
 
 int main(int argc, char **argv) {
-    if(argc != 3) {
+    if(argc != 3 || (strcmp(argv[2], "--run") != 0 && strcmp(argv[2], "--graph") != 0)) {
         help_message(argv[0]);
         return -1;
     }
@@ -150,15 +150,11 @@ int main(int argc, char **argv) {
         bool accepted = isValid(&cfg, start_node, input);
         printf("%s\n", accepted ? "accepted" : "not accepted");
     } else if(strcmp(argv[2], "--graph") == 0) {
-        char *dest = (char *)calloc(256, sizeof(char));
+        char *dest = (char *)calloc(1024, sizeof(char));
         to_dot(&cfg, start_node, dest);
-    } else {
-        help_message(argv[0]);
-        return -1;
+        free(dest);
     }
 
-
-
-
+    config_destroy(&cfg);
     return 0;
 }
