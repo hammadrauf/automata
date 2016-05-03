@@ -54,7 +54,7 @@ bool isValid(config_t *cfg, const char *start, const char *input) {
     return false;
 }
 
-int to_dot(config_t *cfg, const char *start, char *dest) {
+int to_dot(config_t *cfg, const char *start, char *dest, int dest_size) {
     const char *fmt_str = "digraph automaton {\n"
                            "\tgraph [rankdir=LR];\n\tstart [shape=plaintext];\n"
                            "\tstart -> %s;\n"; // start_node
@@ -65,7 +65,7 @@ int to_dot(config_t *cfg, const char *start, char *dest) {
     const char *start_node;
     config_lookup_string(cfg, "automaton.start", &start_node);
 
-    int cur_length = snprintf(dest, 1024, fmt_str, start_node);
+    int cur_length = snprintf(dest, dest_size, fmt_str, start_node);
 
     int i;
     for(i = 0; i < node_count; ++i) {
@@ -105,12 +105,12 @@ int to_dot(config_t *cfg, const char *start, char *dest) {
                 strcat(label, config_setting_get_string(cur_acc));
             }
 
-            cur_length += snprintf(dest + cur_length, 1024, loop_fmt_str, accepted_state ? cur_node_txt : "", cur_node_shape, cur_node_txt, next_start, label);
+            cur_length += snprintf(dest + cur_length, dest_size, loop_fmt_str, accepted_state ? cur_node_txt : "", cur_node_shape, cur_node_txt, next_start, label);
             free(label);
         }
     }
 
-    snprintf(dest + cur_length, 1024, "}\n");
+    snprintf(dest + cur_length, dest_size, "}\n");
 
     return 0;
 }
@@ -145,10 +145,9 @@ int main(int argc, char **argv) {
         bool accepted = isValid(&cfg, start_node, input);
         printf("%s\n", accepted ? "accepted" : "not accepted");
     } else if(strcmp(argv[2], "--graph") == 0) {
-        char *dest = (char *)calloc(1024, sizeof(char));
-        to_dot(&cfg, start_node, dest);
+        char dest[1024] = {0};
+        to_dot(&cfg, start_node, dest, 1024);
         printf("%s", dest);
-        free(dest);
     }
 
     config_destroy(&cfg);
