@@ -37,19 +37,30 @@ bool is_accepted(config_t *cfg, const char *start, const char *input) {
     config_setting_t *trans = config_setting_lookup(cur_node, "transitions");
     if(trans == NULL) return false;
 
-    int num_paths = config_setting_length(trans);
-    int i;
-    for(i = 0; i < num_paths; ++i) {
-        config_setting_t *cur_path = config_setting_get_elem(trans, i);
-        unsigned int ct = can_transition(cur_path, input);
-        if(ct) {
-            const char *next_input = (ct == 1) ? input + 1 : input;
-            const char *next_start;
-            config_setting_lookup_string(cur_path, "to", &next_start);
-            bool next = is_accepted(cfg, next_start, next_input);
-            if(next) return true;
+    bool any_path_found = false;
+
+    #pragma omp parallel
+    {
+
+        int num_paths = config_setting_length(trans);
+        int i;
+        if(!any_path_found) {
+            #pragma omp for
+            for(i = 0; i < num_paths; ++i) {
+                config_setting_t *cur_path = config_setting_get_elem(trans, i);
+                unsigned int ct = can_transition(cur_path, input);
+                if(ct) {
+                    const char *next_input = (ct == 1) ? input + 1 : input;
+                    const char *next_start;
+                    config_setting_lookup_string(cur_path, "to", &next_start);
+                    bool next = is_accepted(cfg, next_start, next_input);
+                    if(next) any_path_found = true;
+                }
+            }
         }
     }
+
+    return any_path_found;
 
     return false;
 }

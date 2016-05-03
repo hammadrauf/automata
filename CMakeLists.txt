@@ -14,6 +14,11 @@ link_directories(${LIBCONFIG_LIBRARY_DIRS})
 # Add other flags to the compiler
 add_definitions(${LIBCONFIG_CFLAGS_OTHER})
 
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+endif()
+
 # Add an executable compiled from main.c
 add_executable(automata main.c)
 
