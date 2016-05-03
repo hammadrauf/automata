@@ -58,21 +58,16 @@ int to_dot(config_t *cfg, const char *start, char *dest) {
     const char *fmt_str = "digraph automaton {\n"
                            "\tgraph [rankdir=LR];\n\tstart [shape=plaintext];\n"
                            "\tstart -> %s;\n"; // start_node
-    // strcat(dest, "digraph automaton {\n");
 
     config_setting_t *nodes = config_lookup(cfg, "automaton.nodes");
     int node_count = config_setting_length(nodes);
-    int i;
 
-    // strcat(dest, "\tgraph [rankdir=LR];\n\tstart [shape=plaintext];\n\tstart -> ");
     const char *start_node;
     config_lookup_string(cfg, "automaton.start", &start_node);
-    // strcat(dest, start_node);
-    // strcat(dest, "\n");
 
-    char test_fmt[1024];
-    snprintf(test_fmt, 1024, fmt_str, start_node);
+    int cur_length = snprintf(dest, 1024, fmt_str, start_node);
 
+    int i;
     for(i = 0; i < node_count; ++i) {
         config_setting_t *cur_node = config_setting_get_elem(nodes, i);
         if(cur_node == NULL) {
@@ -85,7 +80,7 @@ int to_dot(config_t *cfg, const char *start, char *dest) {
 
         int num_paths = config_setting_length(trans);
         int j;
-        char loop_fmt_str[256] = "\t%s%s%s -> %s [label=\"%s\"];\n";
+        const char *loop_fmt_str = "\t%s%s%s -> %s [label=\"%s\"];\n";
         for(j = 0; j < num_paths; ++j) {
             config_setting_t *cur_path = config_setting_get_elem(trans, j);
             const char *next_start;
@@ -93,11 +88,9 @@ int to_dot(config_t *cfg, const char *start, char *dest) {
 
             int accepted_state;
             config_setting_lookup_bool(cur_node, "accepted", &accepted_state);
-            char cur_node_txt[32] = {0}, cur_node_shape[32] = {0};
-            strcpy(cur_node_txt, config_setting_name(cur_node));
-            if(accepted_state) {
-                strcpy(cur_node_shape, " [shape=doublecircle];\n\t");
-            }
+
+            char *cur_node_txt = config_setting_name(cur_node);
+            const char *cur_node_shape = accepted_state ? " [shape=doublecircle];\n\t" : "";
 
             config_setting_t *accepted = config_setting_lookup(cur_path, "accepts");
             int num_accepted = config_setting_length(accepted);
@@ -111,16 +104,13 @@ int to_dot(config_t *cfg, const char *start, char *dest) {
                 config_setting_t *cur_acc = config_setting_get_elem(accepted, k);
                 strcat(label, config_setting_get_string(cur_acc));
             }
-            char loop_fmt[256];
-            snprintf(loop_fmt, 256, loop_fmt_str, accepted_state ? cur_node_txt : "", cur_node_shape, cur_node_txt, next_start, label);
-            strcat(test_fmt, loop_fmt);
+
+            cur_length += snprintf(dest + cur_length, 1024, loop_fmt_str, accepted_state ? cur_node_txt : "", cur_node_shape, cur_node_txt, next_start, label);
             free(label);
         }
     }
 
-    strcat(test_fmt, "}\n");
-
-    strcpy(dest, test_fmt);
+    snprintf(dest + cur_length, 1024, "}\n");
 
     return 0;
 }
