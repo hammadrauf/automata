@@ -46,7 +46,9 @@ bool is_accepted(config_t *cfg, const char *start, const char *input) {
             const char *next_input = (ct == 1) ? input + 1 : input;
             const char *next_start;
             config_setting_lookup_string(cur_path, "to", &next_start);
-            bool next = is_accepted(cfg, next_start, next_input);
+            bool next;
+            #pragma omp task shared(next)
+            next = is_accepted(cfg, next_start, next_input);
             if(next) return true;
         }
     }
@@ -142,8 +144,11 @@ int main(int argc, char **argv) {
         char input[80];
         scanf("%79[^\n]%*c", input);
 
-        bool accepted = is_accepted(&cfg, start_node, input);
-        printf("%s\n", accepted ? "accepted" : "not accepted");
+        #pragma omp parallel
+        {
+            bool accepted = is_accepted(&cfg, start_node, input);
+            printf("%s\n", accepted ? "accepted" : "not accepted");
+        }
     } else if(strcmp(argv[2], "--graph") == 0) {
         char dest[1024] = {0};
         to_dot(&cfg, start_node, dest, 1024);
