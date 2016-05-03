@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <libconfig.h>
 
-unsigned int willAccept(config_setting_t *transition, const char *input) {
+unsigned int can_transition(config_setting_t *transition, const char *input) {
     config_setting_t *accepts = config_setting_lookup(transition, "accepts");
     int length = config_setting_length(accepts);
     int i;
@@ -20,7 +20,7 @@ unsigned int willAccept(config_setting_t *transition, const char *input) {
     return 0;
 }
 
-bool isValid(config_t *cfg, const char *start, const char *input) {
+bool is_accepted(config_t *cfg, const char *start, const char *input) {
     char path[80] = "automaton.nodes.";
     strcat(path, start);
 
@@ -41,12 +41,12 @@ bool isValid(config_t *cfg, const char *start, const char *input) {
     int i;
     for(i = 0; i < num_paths; ++i) {
         config_setting_t *cur_path = config_setting_get_elem(trans, i);
-        unsigned int wa = willAccept(cur_path, input);
-        if(wa) {
-            const char *next_input = (wa == 1) ? input + 1 : input;
+        unsigned int ct = can_transition(cur_path, input);
+        if(ct) {
+            const char *next_input = (ct == 1) ? input + 1 : input;
             const char *next_start;
             config_setting_lookup_string(cur_path, "to", &next_start);
-            bool next = isValid(cfg, next_start, next_input);
+            bool next = is_accepted(cfg, next_start, next_input);
             if(next) return true;
         }
     }
@@ -142,7 +142,7 @@ int main(int argc, char **argv) {
         char input[80];
         scanf("%79[^\n]%*c", input);
 
-        bool accepted = isValid(&cfg, start_node, input);
+        bool accepted = is_accepted(&cfg, start_node, input);
         printf("%s\n", accepted ? "accepted" : "not accepted");
     } else if(strcmp(argv[2], "--graph") == 0) {
         char dest[1024] = {0};
