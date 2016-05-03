@@ -8,6 +8,9 @@ set(automata_VERSION_PATCH "1")
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBCONFIG REQUIRED libconfig)
 
+include_directories("${CMAKE_SOURCE_DIR}/include")
+add_library(automata_incl "${CMAKE_SOURCE_DIR}/include/automata.c")
+
 include_directories(${LIBCONFIG_INCLUDE_DIRS})
 link_directories(${LIBCONFIG_LIBRARY_DIRS})
 
@@ -19,11 +22,14 @@ if (OPENMP_FOUND)
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 endif()
 
+# include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+# set(SOURCES main.c ${CMAKE_CURRENT_SOURCE_DIR}/include/automata.h)
+
 # Add an executable compiled from main.c
 add_executable(automata main.c)
 
 # Link the target to the config libraries
-target_link_libraries(automata ${LIBCONFIG_LIBRARIES})
+target_link_libraries(automata ${LIBCONFIG_LIBRARIES} automata_incl)
 
 install(TARGETS automata DESTINATION bin)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE DESTINATION share/licenses/${PROJECT_NAME})
