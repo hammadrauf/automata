@@ -5,6 +5,8 @@ set(automata_VERSION_MAJOR "1")
 set(automata_VERSION_MINOR "0")
 set(automata_VERSION_PATCH "1")
 
+# include("tests/CMakeLists.txt")
+
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBCONFIG REQUIRED libconfig)
 
@@ -33,6 +35,10 @@ target_link_libraries(automata ${LIBCONFIG_LIBRARIES} automata_incl)
 
 install(TARGETS automata DESTINATION bin)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE DESTINATION share/licenses/${PROJECT_NAME})
+
+add_subdirectory("tests")
+enable_testing()
+add_test(NAME AllTests COMMAND unit_test)
 
 # Taken from CMake wiki
 # uninstall target

@@ -8,7 +8,7 @@ void help_message(char *name) {
 int main(int argc, char **argv) {
     if(argc != 3 || (strcmp(argv[2], "--run") != 0 && strcmp(argv[2], "--graph") != 0)) {
         help_message(argv[0]);
-        return -1;
+        return 0;
     }
 
     config_t cfg;
