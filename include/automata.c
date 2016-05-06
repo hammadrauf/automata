@@ -1,4 +1,8 @@
 #include "automata.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <libconfig.h>
 
 unsigned int can_transition(config_setting_t *transition, const char *input) {
     config_setting_t *accepts = config_setting_lookup(transition, "accepts");
