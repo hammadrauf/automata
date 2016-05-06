@@ -5,7 +5,7 @@
 #include <libconfig.h>
 #include "minunit.h"
 
-MU_TEST(example_2_aa) {
+MU_TEST(example2_aa) {
     config_t cfg;
     config_init(&cfg);
 
@@ -20,7 +20,7 @@ MU_TEST(example_2_aa) {
     mu_assert(acc, "'aa' not accepted as input by example 2");
 }
 
-MU_TEST(example_2_aba) {
+MU_TEST(example2_aba) {
     config_t cfg;
     config_init(&cfg);
 
@@ -35,7 +35,7 @@ MU_TEST(example_2_aba) {
     mu_assert(acc, "'aba' not accepted as input by example 2");
 }
 
-MU_TEST(example_2_abbbbbba) {
+MU_TEST(example2_abbbbbba) {
     config_t cfg;
     config_init(&cfg);
 
@@ -50,7 +50,7 @@ MU_TEST(example_2_abbbbbba) {
     mu_assert(acc, "'abbbbbba' not accepted as input by example 2");
 }
 
-MU_TEST(example_2_a) {
+MU_TEST(example2_a) {
     config_t cfg;
     config_init(&cfg);
 
@@ -65,7 +65,7 @@ MU_TEST(example_2_a) {
     mu_assert(!acc, "'a' accepted as input by example 2");
 }
 
-MU_TEST(example_2_ab) {
+MU_TEST(example2_ab) {
     config_t cfg;
     config_init(&cfg);
 
@@ -80,7 +80,7 @@ MU_TEST(example_2_ab) {
     mu_assert(!acc, "'ab' accepted as input by example 2");
 }
 
-MU_TEST(example_2_ba) {
+MU_TEST(example2_ba) {
     config_t cfg;
     config_init(&cfg);
 
@@ -95,13 +95,13 @@ MU_TEST(example_2_ba) {
     mu_assert(!acc, "'ba' accepted as input by example 2");
 }
 
-MU_TEST_SUITE(example_2) {
-    MU_RUN_TEST(example_2_aa);
-    MU_RUN_TEST(example_2_aba);
-    MU_RUN_TEST(example_2_abbbbbba);
-    MU_RUN_TEST(example_2_a);
-    MU_RUN_TEST(example_2_ab);
-    MU_RUN_TEST(example_2_ba);
+MU_TEST_SUITE(example2) {
+    MU_RUN_TEST(example2_aa);
+    MU_RUN_TEST(example2_aba);
+    MU_RUN_TEST(example2_abbbbbba);
+    MU_RUN_TEST(example2_a);
+    MU_RUN_TEST(example2_ab);
+    MU_RUN_TEST(example2_ba);
 }
 
 #endif /* TEST_EX_2_H */

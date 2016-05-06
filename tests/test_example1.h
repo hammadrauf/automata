@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "minunit.h"
 
-MU_TEST(example_1_a) {
+MU_TEST(example1_a) {
     config_t cfg;
     config_init(&cfg);
 
@@ -21,7 +21,7 @@ MU_TEST(example_1_a) {
     mu_assert(acc, "'a' not accepted as input by example 1");
 }
 
-MU_TEST(example_1_b) {
+MU_TEST(example1_b) {
     config_t cfg;
     config_init(&cfg);
 
@@ -36,7 +36,7 @@ MU_TEST(example_1_b) {
     mu_assert(acc, "'b' not accepted as input by example 1");
 }
 
-MU_TEST(example_1_blank) {
+MU_TEST(example1_blank) {
     config_t cfg;
     config_init(&cfg);
 
@@ -51,7 +51,7 @@ MU_TEST(example_1_blank) {
     mu_assert(!acc, "Empty string accepted as input by example 1");
 }
 
-MU_TEST(example_1_longer) {
+MU_TEST(example1_longer) {
     config_t cfg;
     config_init(&cfg);
 
@@ -66,11 +66,11 @@ MU_TEST(example_1_longer) {
     mu_assert(acc, "'aabababababababababa' not accepted as input by example 1");
 }
 
-MU_TEST_SUITE(example_1) {
-    MU_RUN_TEST(example_1_a);
-    MU_RUN_TEST(example_1_b);
-    MU_RUN_TEST(example_1_blank);
-    MU_RUN_TEST(example_1_longer);
+MU_TEST_SUITE(example1) {
+    MU_RUN_TEST(example1_a);
+    MU_RUN_TEST(example1_b);
+    MU_RUN_TEST(example1_blank);
+    MU_RUN_TEST(example1_longer);
 }
 
 #endif /* TEST_EX_1_H */
