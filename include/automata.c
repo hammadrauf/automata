@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <libconfig.h>
 
-unsigned int can_transition(config_setting_t *transition, const char *input) {
-    config_setting_t *accepts = config_setting_lookup(transition, "accepts");
+unsigned int can_transition(config_t *cfg, const char *path, const char *input) {
+    config_setting_t *accepts = config_lookup(cfg, path);
     int length = config_setting_length(accepts);
     int i;
     for(i = 0; i < length; ++i) {
@@ -34,7 +34,10 @@ bool automata_is_accepted(config_t *cfg, const char *start, const char *input) {
     config_setting_lookup_bool(cur_node, "accepted", &end_node);
     if(end_node && input[0] == '\0') return true;
 
-    config_setting_t *trans = config_setting_lookup(cur_node, "transitions");
+    // config_setting_t *trans = config_setting_lookup(cur_node, "transitions");
+    char trans_path[91];
+    snprintf(trans_path, 91, "%s.transitions", path);
+    config_setting_t *trans = config_lookup(cfg, trans_path);
     if(trans == NULL) return false;
 
     bool any_path_found = false;
@@ -48,7 +51,9 @@ bool automata_is_accepted(config_t *cfg, const char *start, const char *input) {
             #pragma omp for
             for(i = 0; i < num_paths; ++i) {
                 config_setting_t *cur_path = config_setting_get_elem(trans, i);
-                unsigned int ct = can_transition(cur_path, input);
+                char cur_path_str[120];
+                snprintf(cur_path_str, 120, "%s.[%d].accepts", trans_path, i);
+                unsigned int ct = can_transition(cfg, cur_path_str, input);
                 if(ct) {
                     const char *next_input = (ct == 1) ? input + 1 : input;
                     const char *next_start;
@@ -66,6 +71,8 @@ bool automata_is_accepted(config_t *cfg, const char *start, const char *input) {
 }
 
 int automata_to_dot(config_t *cfg, const char *start, char *dest, int dest_size) {
+    // char path[80] = "automaton.nodes.";
+    // strcat(path, start);
     const char *fmt_str = "digraph automaton {\n"
                            "\tgraph [rankdir=LR];\n\tstart [shape=plaintext];\n"
                            "\tstart -> %s;\n"; // start_node
@@ -86,7 +93,10 @@ int automata_to_dot(config_t *cfg, const char *start, char *dest, int dest_size)
             return false;
         }
 
-        config_setting_t *trans = config_setting_lookup(cur_node, "transitions");
+        // config_setting_t *trans = config_setting_lookup(cur_node, "transitions");
+        char trans_path[91];
+        snprintf(trans_path, 91, "automaton.nodes.[%d].transitions", i);
+        config_setting_t *trans = config_lookup(cfg, trans_path);
         if(trans == NULL) return false;
 
         int num_paths = config_setting_length(trans);
@@ -103,7 +113,11 @@ int automata_to_dot(config_t *cfg, const char *start, char *dest, int dest_size)
             char *cur_node_txt = config_setting_name(cur_node);
             const char *cur_node_shape = accepted_state ? " [shape=doublecircle];\n\t" : "";
 
-            config_setting_t *accepted = config_setting_lookup(cur_path, "accepts");
+            // config_setting_t *accepted = config_setting_lookup(cur_path, "accepts");
+            char cur_path_str[120];
+            snprintf(cur_path_str, 120, "%s.[%d].accepts", trans_path, j);
+            config_setting_t *accepted = config_lookup(cfg, cur_path_str);
+            if(accepted == NULL) printf("REEEEE\n");
             int num_accepted = config_setting_length(accepted);
             char *label = (char *)calloc(2 * num_accepted, sizeof(char));
             int k;
