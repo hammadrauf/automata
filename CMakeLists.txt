@@ -40,11 +40,6 @@ add_test(Example2 tests/unit_test example2)
 add_test(Example3 tests/unit_test example3)
 add_test(Example4 tests/unit_test example4)
 
-
-add_custom_target(check ${CMAKE_COMMAND} -E env CTEST_OUTPUT_ON_FAILURE=1
-        ${CMAKE_CTEST_COMMAND} -C $<CONFIG> --verbose
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-
 # Taken from CMake wiki
 # uninstall target
 configure_file(
