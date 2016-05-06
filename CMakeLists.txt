@@ -40,6 +40,11 @@ add_subdirectory("tests")
 enable_testing()
 add_test(NAME AllTests COMMAND unit_test)
 
+
+add_custom_target(check ${CMAKE_COMMAND} -E env CTEST_OUTPUT_ON_FAILURE=1
+        ${CMAKE_CTEST_COMMAND} -C $<CONFIG> -VV
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
 # Taken from CMake wiki
 # uninstall target
 configure_file(
