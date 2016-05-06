@@ -15,6 +15,18 @@ int main(int argc, char **argv) {
         MU_RUN_SUITE(example4);
     }
 
+    if(argc == 2) {
+        if(strcmp(argv[1], "example1") == 0) {
+            MU_RUN_SUITE(example1);
+        } else if(strcmp(argv[1], "example2") == 0) {
+            MU_RUN_SUITE(example2);
+        } else if(strcmp(argv[1], "example3") == 0) {
+            MU_RUN_SUITE(example3);
+        } else if(strcmp(argv[1], "example4") == 0) {
+            MU_RUN_SUITE(example4);
+        }
+    }
+
     MU_REPORT();
 
     return 0;
