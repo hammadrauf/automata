@@ -1,6 +1,7 @@
 #include <automata.h>
 #include <libconfig.h>
 #include <stdio.h>
+#include <string.h>
 #include "minunit.h"
 #include "test_example1.h"
 #include "test_example2.h"
