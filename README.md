@@ -34,6 +34,10 @@ $ automata file.aut --graph > out.gv # Output the automaton to a DOT graph
 
 ![Example 4 Graph](./examples/example4.png)
 
+### [Example 5](./examples/example5.aut)
+
+![Example 5 Graph](./examples/example5.png)
+
 ## Contributing
 
 1. Smash:facepunch::facepunch::facepunch: that mf fork:fork_and_knife: button:weary::100::100:
