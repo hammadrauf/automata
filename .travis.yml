@@ -1,8 +1,9 @@
 language: c
 script: cmake . && make VERBOSE=1 && make test
 compiler: clang
-sudo: required
+sudo: false
 dist: trusty
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libconfig-dev
+addons:
+    apt:
+        packages:
+            - libconfig-dev
