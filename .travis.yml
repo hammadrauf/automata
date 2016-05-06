@@ -1,0 +1,6 @@
+language: c
+script: cmake && make && make test
+compiler: clang
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libconfig9
