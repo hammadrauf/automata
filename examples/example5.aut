@@ -1,0 +1,1083 @@
+
+version = "1.0.0";
+
+automaton: {
+    nodes = {
+        q_2 = {
+            accepted = false;
+            transitions = ({
+                to = "q_4";
+                accepts = ["a"];
+            },
+            {
+                to = "q_5";
+                accepts = ["a"];
+            });
+        },
+
+        q_3 = {
+            accepted = false;
+            transitions = ({
+                to = "q_9";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10";
+                accepts = ["a"];
+            });
+        },
+
+        q_4 = {
+            accepted = false;
+            transitions = ({
+                to = "q_16";
+                accepts = ["a"];
+            },
+            {
+                to = "q_17";
+                accepts = ["a"];
+            });
+        },
+
+        q_5 = {
+            accepted = false;
+            transitions = ({
+                to = "q_25";
+                accepts = ["a"];
+            },
+            {
+                to = "q_26";
+                accepts = ["a"];
+            });
+        },
+
+        q_16 = {
+            accepted = false;
+            transitions = ({
+                to = "q_256";
+                accepts = ["a"];
+            },
+            {
+                to = "q_257";
+                accepts = ["a"];
+            });
+        },
+
+        q_17 = {
+            accepted = false;
+            transitions = ({
+                to = "q_289";
+                accepts = ["a"];
+            },
+            {
+                to = "q_290";
+                accepts = ["a"];
+            });
+        },
+
+        q_256 = {
+            accepted = false;
+            transitions = ({
+                to = "q_65536";
+                accepts = ["a"];
+            },
+            {
+                to = "q_65537";
+                accepts = ["a"];
+            });
+        },
+
+        q_257 = {
+            accepted = false;
+            transitions = ({
+                to = "q_66049";
+                accepts = ["a"];
+            },
+            {
+                to = "q_66050";
+                accepts = ["a"];
+            });
+        },
+
+        q_65536 = {
+            accepted = false;
+            transitions = ({
+                to = "q_4294967296";
+                accepts = ["a"];
+            },
+            {
+                to = "q_4294967297";
+                accepts = ["a"];
+            });
+        },
+
+        q_65537 = {
+            accepted = false;
+            transitions = ({
+                to = "q_4295098369";
+                accepts = ["a"];
+            },
+            {
+                to = "q_4295098370";
+                accepts = ["a"];
+            });
+        },
+
+        q_4294967296 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_4294967297 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_4295098369 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_4295098370 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_66049 = {
+            accepted = false;
+            transitions = ({
+                to = "q_4362470401";
+                accepts = ["a"];
+            },
+            {
+                to = "q_4362470402";
+                accepts = ["a"];
+            });
+        },
+
+        q_66050 = {
+            accepted = false;
+            transitions = ({
+                to = "q_4362602500";
+                accepts = ["a"];
+            },
+            {
+                to = "q_4362602501";
+                accepts = ["a"];
+            });
+        },
+
+        q_4362470401 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_4362470402 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_4362602500 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_4362602501 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_289 = {
+            accepted = false;
+            transitions = ({
+                to = "q_83521";
+                accepts = ["a"];
+            },
+            {
+                to = "q_83522";
+                accepts = ["a"];
+            });
+        },
+
+        q_290 = {
+            accepted = false;
+            transitions = ({
+                to = "q_84100";
+                accepts = ["a"];
+            },
+            {
+                to = "q_84101";
+                accepts = ["a"];
+            });
+        },
+
+        q_83521 = {
+            accepted = false;
+            transitions = ({
+                to = "q_6975757441";
+                accepts = ["a"];
+            },
+            {
+                to = "q_6975757442";
+                accepts = ["a"];
+            });
+        },
+
+        q_83522 = {
+            accepted = false;
+            transitions = ({
+                to = "q_6975924484";
+                accepts = ["a"];
+            },
+            {
+                to = "q_6975924485";
+                accepts = ["a"];
+            });
+        },
+
+        q_6975757441 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_6975757442 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_6975924484 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_6975924485 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_84100 = {
+            accepted = false;
+            transitions = ({
+                to = "q_7072810000";
+                accepts = ["a"];
+            },
+            {
+                to = "q_7072810001";
+                accepts = ["a"];
+            });
+        },
+
+        q_84101 = {
+            accepted = false;
+            transitions = ({
+                to = "q_7072978201";
+                accepts = ["a"];
+            },
+            {
+                to = "q_7072978202";
+                accepts = ["a"];
+            });
+        },
+
+        q_7072810000 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_7072810001 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_7072978201 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_7072978202 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_25 = {
+            accepted = false;
+            transitions = ({
+                to = "q_625";
+                accepts = ["a"];
+            },
+            {
+                to = "q_626";
+                accepts = ["a"];
+            });
+        },
+
+        q_26 = {
+            accepted = false;
+            transitions = ({
+                to = "q_676";
+                accepts = ["a"];
+            },
+            {
+                to = "q_677";
+                accepts = ["a"];
+            });
+        },
+
+        q_625 = {
+            accepted = false;
+            transitions = ({
+                to = "q_390625";
+                accepts = ["a"];
+            },
+            {
+                to = "q_390626";
+                accepts = ["a"];
+            });
+        },
+
+        q_626 = {
+            accepted = false;
+            transitions = ({
+                to = "q_391876";
+                accepts = ["a"];
+            },
+            {
+                to = "q_391877";
+                accepts = ["a"];
+            });
+        },
+
+        q_390625 = {
+            accepted = false;
+            transitions = ({
+                to = "q_152587890625";
+                accepts = ["a"];
+            },
+            {
+                to = "q_152587890626";
+                accepts = ["a"];
+            });
+        },
+
+        q_390626 = {
+            accepted = false;
+            transitions = ({
+                to = "q_152588671876";
+                accepts = ["a"];
+            },
+            {
+                to = "q_152588671877";
+                accepts = ["a"];
+            });
+        },
+
+        q_152587890625 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_152587890626 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_152588671876 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_152588671877 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_391876 = {
+            accepted = false;
+            transitions = ({
+                to = "q_153566799376";
+                accepts = ["a"];
+            },
+            {
+                to = "q_153566799377";
+                accepts = ["a"];
+            });
+        },
+
+        q_391877 = {
+            accepted = false;
+            transitions = ({
+                to = "q_153567583129";
+                accepts = ["a"];
+            },
+            {
+                to = "q_153567583130";
+                accepts = ["a"];
+            });
+        },
+
+        q_153566799376 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_153566799377 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_153567583129 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_153567583130 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_676 = {
+            accepted = false;
+            transitions = ({
+                to = "q_456976";
+                accepts = ["a"];
+            },
+            {
+                to = "q_456977";
+                accepts = ["a"];
+            });
+        },
+
+        q_677 = {
+            accepted = false;
+            transitions = ({
+                to = "q_458329";
+                accepts = ["a"];
+            },
+            {
+                to = "q_458330";
+                accepts = ["a"];
+            });
+        },
+
+        q_456976 = {
+            accepted = false;
+            transitions = ({
+                to = "q_208827064576";
+                accepts = ["a"];
+            },
+            {
+                to = "q_208827064577";
+                accepts = ["a"];
+            });
+        },
+
+        q_456977 = {
+            accepted = false;
+            transitions = ({
+                to = "q_208827978529";
+                accepts = ["a"];
+            },
+            {
+                to = "q_208827978530";
+                accepts = ["a"];
+            });
+        },
+
+        q_208827064576 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_208827064577 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_208827978529 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_208827978530 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_458329 = {
+            accepted = false;
+            transitions = ({
+                to = "q_210065472241";
+                accepts = ["a"];
+            },
+            {
+                to = "q_210065472242";
+                accepts = ["a"];
+            });
+        },
+
+        q_458330 = {
+            accepted = false;
+            transitions = ({
+                to = "q_210066388900";
+                accepts = ["a"];
+            },
+            {
+                to = "q_210066388901";
+                accepts = ["a"];
+            });
+        },
+
+        q_210065472241 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_210065472242 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_210066388900 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_210066388901 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_9 = {
+            accepted = false;
+            transitions = ({
+                to = "q_81";
+                accepts = ["a"];
+            },
+            {
+                to = "q_82";
+                accepts = ["a"];
+            });
+        },
+
+        q_10 = {
+            accepted = false;
+            transitions = ({
+                to = "q_100";
+                accepts = ["a"];
+            },
+            {
+                to = "q_101";
+                accepts = ["a"];
+            });
+        },
+
+        q_81 = {
+            accepted = false;
+            transitions = ({
+                to = "q_6561";
+                accepts = ["a"];
+            },
+            {
+                to = "q_6562";
+                accepts = ["a"];
+            });
+        },
+
+        q_82 = {
+            accepted = false;
+            transitions = ({
+                to = "q_6724";
+                accepts = ["a"];
+            },
+            {
+                to = "q_6725";
+                accepts = ["a"];
+            });
+        },
+
+        q_6561 = {
+            accepted = false;
+            transitions = ({
+                to = "q_43046721";
+                accepts = ["a"];
+            },
+            {
+                to = "q_43046722";
+                accepts = ["a"];
+            });
+        },
+
+        q_6562 = {
+            accepted = false;
+            transitions = ({
+                to = "q_43059844";
+                accepts = ["a"];
+            },
+            {
+                to = "q_43059845";
+                accepts = ["a"];
+            });
+        },
+
+        q_43046721 = {
+            accepted = false;
+            transitions = ({
+                to = "q_1853020188851841";
+                accepts = ["a"];
+            },
+            {
+                to = "q_1853020188851842";
+                accepts = ["a"];
+            });
+        },
+
+        q_43046722 = {
+            accepted = false;
+            transitions = ({
+                to = "q_1853020274945284";
+                accepts = ["a"];
+            },
+            {
+                to = "q_1853020274945285";
+                accepts = ["a"];
+            });
+        },
+
+        q_1853020188851841 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_1853020188851842 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_1853020274945284 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_1853020274945285 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_43059844 = {
+            accepted = false;
+            transitions = ({
+                to = "q_1854150165304336";
+                accepts = ["a"];
+            },
+            {
+                to = "q_1854150165304337";
+                accepts = ["a"];
+            });
+        },
+
+        q_43059845 = {
+            accepted = false;
+            transitions = ({
+                to = "q_1854150251424025";
+                accepts = ["a"];
+            },
+            {
+                to = "q_1854150251424026";
+                accepts = ["a"];
+            });
+        },
+
+        q_1854150165304336 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_1854150165304337 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_1854150251424025 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_1854150251424026 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_6724 = {
+            accepted = false;
+            transitions = ({
+                to = "q_45212176";
+                accepts = ["a"];
+            },
+            {
+                to = "q_45212177";
+                accepts = ["a"];
+            });
+        },
+
+        q_6725 = {
+            accepted = false;
+            transitions = ({
+                to = "q_45225625";
+                accepts = ["a"];
+            },
+            {
+                to = "q_45225626";
+                accepts = ["a"];
+            });
+        },
+
+        q_45212176 = {
+            accepted = false;
+            transitions = ({
+                to = "q_2044140858654976";
+                accepts = ["a"];
+            },
+            {
+                to = "q_2044140858654977";
+                accepts = ["a"];
+            });
+        },
+
+        q_45212177 = {
+            accepted = false;
+            transitions = ({
+                to = "q_2044140949079329";
+                accepts = ["a"];
+            },
+            {
+                to = "q_2044140949079330";
+                accepts = ["a"];
+            });
+        },
+
+        q_2044140858654976 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_2044140858654977 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_2044140949079329 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_2044140949079330 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_45225625 = {
+            accepted = false;
+            transitions = ({
+                to = "q_2045357156640625";
+                accepts = ["a"];
+            },
+            {
+                to = "q_2045357156640626";
+                accepts = ["a"];
+            });
+        },
+
+        q_45225626 = {
+            accepted = false;
+            transitions = ({
+                to = "q_2045357247091876";
+                accepts = ["a"];
+            },
+            {
+                to = "q_2045357247091877";
+                accepts = ["a"];
+            });
+        },
+
+        q_2045357156640625 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_2045357156640626 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_2045357247091876 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_2045357247091877 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_100 = {
+            accepted = false;
+            transitions = ({
+                to = "q_10000";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10001";
+                accepts = ["a"];
+            });
+        },
+
+        q_101 = {
+            accepted = false;
+            transitions = ({
+                to = "q_10201";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10202";
+                accepts = ["a"];
+            });
+        },
+
+        q_10000 = {
+            accepted = false;
+            transitions = ({
+                to = "q_100000000";
+                accepts = ["a"];
+            },
+            {
+                to = "q_100000001";
+                accepts = ["a"];
+            });
+        },
+
+        q_10001 = {
+            accepted = false;
+            transitions = ({
+                to = "q_100020001";
+                accepts = ["a"];
+            },
+            {
+                to = "q_100020002";
+                accepts = ["a"];
+            });
+        },
+
+        q_100000000 = {
+            accepted = false;
+            transitions = ({
+                to = "q_10000000000000000";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10000000000000001";
+                accepts = ["a"];
+            });
+        },
+
+        q_100000001 = {
+            accepted = false;
+            transitions = ({
+                to = "q_10000000200000001";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10000000200000002";
+                accepts = ["a"];
+            });
+        },
+
+        q_10000000000000000 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10000000000000001 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10000000200000001 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10000000200000002 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_100020001 = {
+            accepted = false;
+            transitions = ({
+                to = "q_10004000600040001";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10004000600040002";
+                accepts = ["a"];
+            });
+        },
+
+        q_100020002 = {
+            accepted = false;
+            transitions = ({
+                to = "q_10004000800080004";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10004000800080005";
+                accepts = ["a"];
+            });
+        },
+
+        q_10004000600040001 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10004000600040002 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10004000800080004 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10004000800080005 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10201 = {
+            accepted = false;
+            transitions = ({
+                to = "q_104060401";
+                accepts = ["a"];
+            },
+            {
+                to = "q_104060402";
+                accepts = ["a"];
+            });
+        },
+
+        q_10202 = {
+            accepted = false;
+            transitions = ({
+                to = "q_104080804";
+                accepts = ["a"];
+            },
+            {
+                to = "q_104080805";
+                accepts = ["a"];
+            });
+        },
+
+        q_104060401 = {
+            accepted = false;
+            transitions = ({
+                to = "q_10828567056280801";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10828567056280802";
+                accepts = ["a"];
+            });
+        },
+
+        q_104060402 = {
+            accepted = false;
+            transitions = ({
+                to = "q_10828567264401604";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10828567264401605";
+                accepts = ["a"];
+            });
+        },
+
+        q_10828567056280801 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10828567056280802 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10828567264401604 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10828567264401605 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_104080804 = {
+            accepted = false;
+            transitions = ({
+                to = "q_10832813761286416";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10832813761286417";
+                accepts = ["a"];
+            });
+        },
+
+        q_104080805 = {
+            accepted = false;
+            transitions = ({
+                to = "q_10832813969448025";
+                accepts = ["a"];
+            },
+            {
+                to = "q_10832813969448026";
+                accepts = ["b"];
+            });
+        },
+
+        q_10832813761286416 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10832813761286417 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10832813969448025 = {
+            accepted = false;
+            transitions = ();
+        },
+
+        q_10832813969448026 = {
+            accepted = true;
+            transitions = ();
+        },
+
+        q_0 = {
+            accepted = false;
+            transitions = ({
+                to = "q_2";
+                accepts = ["a"];
+            },
+            {
+                to = "q_3";
+                accepts = ["a"];
+            });
+        }
+    };
+    start = "q_0";
+}

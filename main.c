@@ -17,12 +17,20 @@ int main(int argc, char **argv) {
     config_t cfg;
     config_init(&cfg);
 
-    if(!config_read_file(&cfg, argv[1])) {
+    FILE *fp = fopen(argv[1], "r");
+
+    if(!config_read(&cfg, fp)) {
         fprintf(stderr, "%d - %s\n", config_error_line(&cfg),
-                                        config_error_text(&cfg));
+                                     config_error_text(&cfg));
         config_destroy(&cfg);
+        fclose(fp);
         return(EXIT_FAILURE);
     }
+
+    fseek(fp, 0L, SEEK_END);
+    unsigned long sz = ftell(fp);
+
+    fclose(fp);
 
     const char *start_node;
     if(!config_lookup_string(&cfg, "automaton.start", &start_node)) return(EXIT_FAILURE);
@@ -34,9 +42,11 @@ int main(int argc, char **argv) {
         bool accepted = automata_is_accepted(&cfg, start_node, input);
         printf("%s\n", accepted ? "accepted" : "not accepted");
     } else if(strcmp(argv[2], "--graph") == 0) {
-        char dest[1024] = {0};
-        automata_to_dot(&cfg, start_node, dest, 1024);
+        // char dest[sz] = {0};
+        char *dest = (char *)calloc(sz, sizeof(char));
+        automata_to_dot(&cfg, start_node, dest, sz);
         printf("%s", dest);
+        free(dest);
     }
 
     config_destroy(&cfg);

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <libconfig.h>
+#include <omp.h>
 
 unsigned int can_transition(config_t *cfg, const char *path, const char *input) {
     config_setting_t *accepts = config_lookup(cfg, path);
@@ -42,24 +43,25 @@ bool automata_is_accepted(config_t *cfg, const char *start, const char *input) {
 
     bool any_path_found = false;
 
-    #pragma omp parallel
-    {
+    int num_paths = config_setting_length(trans);
 
-        int num_paths = config_setting_length(trans);
-        int i;
+    int i;
+    #pragma omp parallel for private(i)
+    for(i = 0; i < num_paths; ++i) {
+        #pragma omp flush(any_path_found)
         if(!any_path_found) {
-            #pragma omp for
-            for(i = 0; i < num_paths; ++i) {
-                config_setting_t *cur_path = config_setting_get_elem(trans, i);
-                char cur_path_str[120];
-                snprintf(cur_path_str, 120, "%s.[%d].accepts", trans_path, i);
-                unsigned int ct = can_transition(cfg, cur_path_str, input);
-                if(ct) {
-                    const char *next_input = (ct == 1) ? input + 1 : input;
-                    const char *next_start;
-                    config_setting_lookup_string(cur_path, "to", &next_start);
-                    bool next = automata_is_accepted(cfg, next_start, next_input);
-                    if(next) any_path_found = true;
+            config_setting_t *cur_path = config_setting_get_elem(trans, i);
+            char cur_path_str[120];
+            snprintf(cur_path_str, 120, "%s.[%d].accepts", trans_path, i);
+            unsigned int ct = can_transition(cfg, cur_path_str, input);
+            if(ct) {
+                const char *next_input = (ct == 1) ? input + 1 : input;
+                const char *next_start;
+                config_setting_lookup_string(cur_path, "to", &next_start);
+                bool next = automata_is_accepted(cfg, next_start, next_input);
+                if(next) {
+                    any_path_found = true;
+                    #pragma omp flush(any_path_found)
                 }
             }
         }
@@ -99,21 +101,21 @@ int automata_to_dot(config_t *cfg, const char *start, char *dest, int dest_size)
         config_setting_t *trans = config_lookup(cfg, trans_path);
         if(trans == NULL) return false;
 
+        int accepted_state;
+        config_setting_lookup_bool(cur_node, "accepted", &accepted_state);
+
+        char *cur_node_txt = config_setting_name(cur_node);
+        const char *cur_node_shape = accepted_state ? " [shape=doublecircle];\n" : "";
+        cur_length += snprintf(dest + cur_length, dest_size, "%s%s%s", accepted_state ? "\t" : "", accepted_state ? cur_node_txt : "", cur_node_shape);
+
         int num_paths = config_setting_length(trans);
         int j;
-        const char *loop_fmt_str = "\t%s%s%s -> %s [label=\"%s\"];\n";
+        const char *loop_fmt_str = "\t%s -> %s [label=\"%s\"];\n";
         for(j = 0; j < num_paths; ++j) {
             config_setting_t *cur_path = config_setting_get_elem(trans, j);
             const char *next_start;
             config_setting_lookup_string(cur_path, "to", &next_start);
 
-            int accepted_state;
-            config_setting_lookup_bool(cur_node, "accepted", &accepted_state);
-
-            char *cur_node_txt = config_setting_name(cur_node);
-            const char *cur_node_shape = accepted_state ? " [shape=doublecircle];\n\t" : "";
-
-            // config_setting_t *accepted = config_setting_lookup(cur_path, "accepts");
             char cur_path_str[120];
             snprintf(cur_path_str, 120, "%s.[%d].accepts", trans_path, j);
             config_setting_t *accepted = config_lookup(cfg, cur_path_str);
@@ -130,7 +132,7 @@ int automata_to_dot(config_t *cfg, const char *start, char *dest, int dest_size)
                 strcat(label, config_setting_get_string(cur_acc));
             }
 
-            cur_length += snprintf(dest + cur_length, dest_size, loop_fmt_str, accepted_state ? cur_node_txt : "", cur_node_shape, cur_node_txt, next_start, label);
+            cur_length += snprintf(dest + cur_length, dest_size, loop_fmt_str, cur_node_txt, next_start, label);
             free(label);
         }
     }
