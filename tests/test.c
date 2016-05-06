@@ -5,14 +5,17 @@
 #include "test_example1.h"
 #include "test_example2.h"
 #include "test_example3.h"
+#include "test_example4.h"
 
 int main(int argc, char **argv) {
     if(argc == 1 || (argc == 2 && strcmp(argv[1], "all") == 0)) {
         MU_RUN_SUITE(example1);
         MU_RUN_SUITE(example2);
         MU_RUN_SUITE(example3);
-        MU_REPORT();
+        MU_RUN_SUITE(example4);
     }
+
+    MU_REPORT();
 
     return 0;
 }
