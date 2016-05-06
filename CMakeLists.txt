@@ -38,6 +38,7 @@ add_test(Example1 tests/unit_test example1)
 add_test(Example2 tests/unit_test example2)
 add_test(Example3 tests/unit_test example3)
 add_test(Example4 tests/unit_test example4)
+add_test(Example5 tests/unit_test example5)
 
 # Taken from CMake wiki
 # uninstall target
