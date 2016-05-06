@@ -18,8 +18,8 @@ int main(int argc, char **argv) {
     config_init(&cfg);
 
     if(!config_read_file(&cfg, argv[1])) {
-        fprintf(stderr, "%s:%d - %s\n", config_error_file(&cfg),
-                config_error_line(&cfg), config_error_text(&cfg));
+        fprintf(stderr, "%d - %s\n", config_error_line(&cfg),
+                                        config_error_text(&cfg));
         config_destroy(&cfg);
         return(EXIT_FAILURE);
     }
