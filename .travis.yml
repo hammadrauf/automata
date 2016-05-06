@@ -1,5 +1,5 @@
 language: c
-script: cmake . && make && make test
+script: cmake . && make VERBOSE=1 && make test
 compiler: clang
 before_install:
   - sudo apt-get -qq update
