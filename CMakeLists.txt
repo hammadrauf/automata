@@ -13,11 +13,10 @@ pkg_check_modules(LIBCONFIG REQUIRED libconfig)
 include_directories("${CMAKE_SOURCE_DIR}/include")
 add_library(automata_incl "${CMAKE_SOURCE_DIR}/include/automata.c")
 
-include_directories(${LIBCONFIG_INCLUDE_DIRS})
-link_directories(${LIBCONFIG_LIBRARY_DIRS})
-
 # Add other flags to the compiler
 add_definitions(${LIBCONFIG_CFLAGS_OTHER})
+
+message(STATUS "LIBCONFIG LIBRARIES: " ${LIBCONFIG_LIBRARIES})
 
 find_package(OpenMP)
 if (OPENMP_FOUND)
