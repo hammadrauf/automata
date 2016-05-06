@@ -5,6 +5,8 @@ set(automata_VERSION_MAJOR "1")
 set(automata_VERSION_MINOR "0")
 set(automata_VERSION_PATCH "1")
 
+# include("tests/CMakeLists.txt")
+
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBCONFIG REQUIRED libconfig)
 
@@ -22,9 +24,6 @@ if (OPENMP_FOUND)
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 endif()
 
-# include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-# set(SOURCES main.c ${CMAKE_CURRENT_SOURCE_DIR}/include/automata.h)
-
 # Add an executable compiled from main.c
 add_executable(automata main.c)
 
@@ -33,6 +32,18 @@ target_link_libraries(automata ${LIBCONFIG_LIBRARIES} automata_incl)
 
 install(TARGETS automata DESTINATION bin)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE DESTINATION share/licenses/${PROJECT_NAME})
+
+add_subdirectory("tests")
+enable_testing()
+add_test(Example1 tests/unit_test example1)
+add_test(Example2 tests/unit_test example2)
+add_test(Example3 tests/unit_test example3)
+add_test(Example4 tests/unit_test example4)
+
+
+add_custom_target(check ${CMAKE_COMMAND} -E env CTEST_OUTPUT_ON_FAILURE=1
+        ${CMAKE_CTEST_COMMAND} -C $<CONFIG> --verbose
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 # Taken from CMake wiki
 # uninstall target
