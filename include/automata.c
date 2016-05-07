@@ -35,20 +35,27 @@ bool automata_is_accepted(config_t *cfg, const char *start, const char *input) {
 
     config_setting_t *cur_node = config_lookup(cfg, path);
     if(cur_node == NULL) {
+        free(path);
         fprintf(stderr, "Couldn't find node %s", start);
         return false;
     }
 
     int end_node = false;
     config_setting_lookup_bool(cur_node, "accepted", &end_node);
-    if(end_node && input[0] == '\0') return true;
+    if(end_node && input[0] == '\0') {
+        free(path);
+        return true;
+    }
 
     // config_setting_t *trans = config_setting_lookup(cur_node, "transitions");
     // char trans_path[171];
     // snprintf(trans_path, 171, "%s.transitions", path); // 11 chars
     strcat(path, ".transitions");
     config_setting_t *trans = config_lookup(cfg, path);
-    if(trans == NULL) return false;
+    if(trans == NULL) {
+        free(path);
+        return false;
+    }
 
     bool any_path_found = false;
 
