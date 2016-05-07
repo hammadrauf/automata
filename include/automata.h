@@ -1,5 +1,6 @@
 #ifndef AUTOMATA_H
 #define AUTOMATA_H
+#include <math.h>
 #include <stdbool.h>
 #include <libconfig.h>
 

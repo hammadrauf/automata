@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <libconfig.h>
-#include <omp.h>
+#include <math.h>
 
 unsigned int can_transition(config_t *cfg, const char *path, const char *input) {
     config_setting_t *accepts = config_lookup(cfg, path);
@@ -22,8 +22,16 @@ unsigned int can_transition(config_t *cfg, const char *path, const char *input) 
 }
 
 bool automata_is_accepted(config_t *cfg, const char *start, const char *input) {
-    char path[80] = "automaton.nodes.";
-    strcat(path, start);
+    // char path[160] = "automaton.nodes."; // 16 chars
+    /** Allocate memory for:
+      * "automaton.nodes."
+      * The string length of start
+      * \0
+     **/
+    size_t path_len = 16 + 12 + strlen(start);
+    char *path = (char *)calloc(path_len + 1, sizeof(char));
+    snprintf(path, path_len, "automaton.nodes.%s", start);
+    // strcat(path, start); // arbitrary
 
     config_setting_t *cur_node = config_lookup(cfg, path);
     if(cur_node == NULL) {
@@ -36,14 +44,17 @@ bool automata_is_accepted(config_t *cfg, const char *start, const char *input) {
     if(end_node && input[0] == '\0') return true;
 
     // config_setting_t *trans = config_setting_lookup(cur_node, "transitions");
-    char trans_path[91];
-    snprintf(trans_path, 91, "%s.transitions", path);
-    config_setting_t *trans = config_lookup(cfg, trans_path);
+    // char trans_path[171];
+    // snprintf(trans_path, 171, "%s.transitions", path); // 11 chars
+    strcat(path, ".transitions");
+    config_setting_t *trans = config_lookup(cfg, path);
     if(trans == NULL) return false;
 
     bool any_path_found = false;
 
     int num_paths = config_setting_length(trans);
+
+    // printf("\n===\n%d\n===\n", num_paths);
 
     int i;
     #pragma omp parallel for private(i)
@@ -51,9 +62,20 @@ bool automata_is_accepted(config_t *cfg, const char *start, const char *input) {
         #pragma omp flush(any_path_found)
         if(!any_path_found) {
             config_setting_t *cur_path = config_setting_get_elem(trans, i);
-            char cur_path_str[120];
-            snprintf(cur_path_str, 120, "%s.[%d].accepts", trans_path, i);
+            // char cur_path_str[200];
+            // snprintf(cur_path_str, 200, "%s.[%d].accepts", trans_path, i); // 8 chars + digit length (floor(log10(abs(the_integer))) + 1)
+            int digit_len = (i == 0) ? 1 : floor(log10(abs(i))) + 1;
+            /** Allocate memory for:
+              * ".[].accepts"
+              * The string length of i
+              * The length of the current path
+              * \0
+             **/
+            size_t cur_path_len = path_len + 12 + digit_len;
+            char *cur_path_str = (char *)calloc(cur_path_len + 1, sizeof(char));
+            snprintf(cur_path_str, cur_path_len, "%s.[%d].accepts", path, i);
             unsigned int ct = can_transition(cfg, cur_path_str, input);
+            free(cur_path_str);
             if(ct) {
                 const char *next_input = (ct == 1) ? input + 1 : input;
                 const char *next_start;
@@ -67,9 +89,9 @@ bool automata_is_accepted(config_t *cfg, const char *start, const char *input) {
         }
     }
 
-    return any_path_found;
+    free(path);
 
-    return false;
+    return any_path_found;
 }
 
 int automata_to_dot(config_t *cfg, const char *start, char *dest, int dest_size) {
