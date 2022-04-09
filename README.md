@@ -16,6 +16,12 @@ $ automata file.aut --run # Read input from STDIN and determine if it is accepte
 $ automata file.aut --graph > out.gv # Output the automaton to a DOT graph
 ```
 
+## Dependence
+
+It uses following open Source Library.
+
+1. libconfig - https://hyperrealm.github.io/libconfig/ 
+
 ## Sample Output
 
 ### [Example 1](./examples/example1.aut)
